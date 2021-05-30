@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import static com.meghdut.ui.UIUtils.setUpLookFeel;
+
 /**
  * @author user
  */
@@ -267,16 +269,6 @@ public class LoginUI extends javax.swing.JFrame
         java.awt.EventQueue.invokeLater(() -> new LoginUI().setVisible(true));
     }
 
-    private static void setUpLookFeel()
-    {
-        try{
-
-            String className = javax.swing.UIManager.getSystemLookAndFeelClassName();
-            javax.swing.UIManager.setLookAndFeel(className);
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(LoginUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chat_id;

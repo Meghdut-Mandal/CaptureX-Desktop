@@ -1,7 +1,11 @@
+import com.google.gson.Gson
 import com.meghdut.ui.LoginUI
 import com.pengrad.telegrambot.TelegramBot
 import com.pengrad.telegrambot.UpdatesListener
+import com.pengrad.telegrambot.model.Message
 import com.pengrad.telegrambot.model.Update
+import com.pengrad.telegrambot.model.request.InlineKeyboardButton
+import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup
 import com.pengrad.telegrambot.request.SendMessage
 import com.pengrad.telegrambot.request.SendPhoto
 import java.io.File
@@ -21,27 +25,25 @@ object MainApp {
 
     private var finalChatID = 0L
 
-    private val configFile = File("capturex.conf")
+    private val configFile = File("capture.prop")
 
     const val CHAT_ID = "chat_id"
+    const val BOT_ID="bot_id"
+
+    private var isVerified = false
 
     private val properties = Properties()
 
+    private val gson = Gson()
 
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val bot = TelegramBot("1833118457:AAF_e597d-S-2fTRB9qyRZ-svPxQvG6LpKM")
+        loadProps()
+        val bot = TelegramBot(properties[BOT_ID].toString())
 
         bot.setUpdatesListener { updates: List<Update?>? ->
-            println(">MainApp>main  $updates ")
-            updates?.forEach { update ->
-                val chatId = update?.message()?.chat()?.id()
-                if (chatId != null) {
-                    bot.execute(SendMessage(chatId, "ChatID= ${encryptChatId(chatId)} "))
-                    chatIdList.add(chatId)
-                }
-            }
+            handleUpdates(updates, bot)
             UpdatesListener.CONFIRMED_UPDATES_ALL
         }
 
@@ -49,6 +51,33 @@ object MainApp {
             showLogin(bot)
         } else {
             startCaptureX(bot)
+        }
+    }
+
+    private fun handleUpdates(
+        updates: List<Update?>?,
+        bot: TelegramBot
+    ) {
+        updates?.forEach { update ->
+            println(">MainApp>main  ${gson.toJson(update)} ")
+
+            val message = update?.message() ?: return@forEach
+            val chatId = message.chat()?.id()
+            bot.sendChatID(message)
+        }
+    }
+
+    private fun TelegramBot.sendChatID(
+        message: Message
+    ) {
+        if (finalChatID != 0L) return
+        val chatId = message.chat()?.id() ?: return
+        if (message.newChatMembers()
+                ?.any { it.username() == "capture_x_bot" } == true && !chatIdList.contains(chatId)
+        ) {
+            execute(SendMessage(chatId, "ChatID= ${encryptChatId(chatId)} "))
+            println(">MainApp>handleUpdates  Sent ID for verification ")
+            chatIdList.add(chatId)
         }
     }
 
@@ -77,7 +106,12 @@ object MainApp {
             if (code == verifyCode) {
                 loginUI.info("Channel Verification Completed Successfully!")
                 saveConfig()
-                bot.execute(SendMessage(finalChatID,"Verification Completed!"))
+                bot.execute(
+                    SendMessage(finalChatID, "Verification Completed!").replyMarkup(
+                        InlineKeyboardMarkup(InlineKeyboardButton("Capture Screen"))
+                    )
+                )
+                isVerified=true
                 loginUI.dispose()
             }
         }
@@ -113,8 +147,8 @@ object MainApp {
         }
     }
 
-    private fun encryptChatId(chatID: Long): String {
-        return chatID.absoluteValue.toString(36)
+    private fun encryptChatId(chatID: Long?): String? {
+        return chatID?.absoluteValue?.toString(36)
     }
 
     private fun decryptChatId(chatID: String): Long {
