@@ -22,8 +22,9 @@ public class LoginUI extends javax.swing.JFrame
 
     public LoginUI()
     {
+        setUpLookFeel();
         initComponents();
-//        verify_panel.setVisible(false);
+        verify_panel.setVisible(false);
     }
 
     /**
@@ -79,7 +80,7 @@ public class LoginUI extends javax.swing.JFrame
         jLabel2.setText("Check the Group, And Click on the correct Code");
 
         code_4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        code_4.setText("jButton2");
+        code_4.setText("04");
         code_4.setMaximumSize(new java.awt.Dimension(50, 50));
         code_4.setMinimumSize(new java.awt.Dimension(50, 50));
         code_4.addActionListener(new java.awt.event.ActionListener() {
@@ -89,7 +90,7 @@ public class LoginUI extends javax.swing.JFrame
         });
 
         code_3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        code_3.setText("jButton2");
+        code_3.setText("03");
         code_3.setMaximumSize(new java.awt.Dimension(50, 50));
         code_3.setMinimumSize(new java.awt.Dimension(50, 50));
         code_3.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +100,7 @@ public class LoginUI extends javax.swing.JFrame
         });
 
         code_2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        code_2.setText("jButton2");
+        code_2.setText("02");
         code_2.setMaximumSize(new java.awt.Dimension(50, 50));
         code_2.setMinimumSize(new java.awt.Dimension(50, 50));
         code_2.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +110,7 @@ public class LoginUI extends javax.swing.JFrame
         });
 
         code_1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        code_1.setText("jButton2");
+        code_1.setText("01");
         code_1.setMaximumSize(new java.awt.Dimension(50, 50));
         code_1.setMinimumSize(new java.awt.Dimension(50, 50));
         code_1.addActionListener(new java.awt.event.ActionListener() {
@@ -123,33 +124,32 @@ public class LoginUI extends javax.swing.JFrame
         verify_panelLayout.setHorizontalGroup(
             verify_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(verify_panelLayout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
+                .addGap(77, 77, 77)
                 .addGroup(verify_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, verify_panelLayout.createSequentialGroup()
+                    .addComponent(jLabel2)
+                    .addGroup(verify_panelLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
                         .addComponent(code_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(code_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(code_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(code_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, verify_panelLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(84, 84, 84))))
+                        .addComponent(code_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         verify_panelLayout.setVerticalGroup(
             verify_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(verify_panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(verify_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(code_4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(code_3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(code_2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(code_1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -224,7 +224,7 @@ public class LoginUI extends javax.swing.JFrame
     {
         if (codes.size() != 4)
             throw new IllegalArgumentException("Exactly 4 Arguments are required!");
-
+         verify_panel.setVisible(true);
         chat_id.setEnabled(false);
         code_1.setText(codes.get(0));
         code_2.setText(codes.get(1));
@@ -242,7 +242,7 @@ public class LoginUI extends javax.swing.JFrame
 
     public void setVerifyButtonListener(StringHandler listener)
     {
-        verify_btn.addActionListener(e -> listener.handle(verify_btn.getText()));
+        verify_btn.addActionListener(e -> listener.handle(chat_id.getText().trim()));
     }
 
     public void info(String info)
@@ -260,6 +260,14 @@ public class LoginUI extends javax.swing.JFrame
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
+        setUpLookFeel();
+        //</editor-fold>
+
+        java.awt.EventQueue.invokeLater(() -> new LoginUI().setVisible(true));
+    }
+
+    private static void setUpLookFeel()
+    {
         try{
 
             String className = javax.swing.UIManager.getSystemLookAndFeelClassName();
@@ -267,9 +275,6 @@ public class LoginUI extends javax.swing.JFrame
         } catch (Exception ex) {
             java.util.logging.Logger.getLogger(LoginUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(() -> new LoginUI().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

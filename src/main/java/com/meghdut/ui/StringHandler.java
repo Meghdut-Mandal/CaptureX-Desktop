@@ -1,6 +1,6 @@
 package com.meghdut.ui;
 
-interface StringHandler
+public interface StringHandler
 {
     void handle(String string);
 }
