@@ -77,6 +77,7 @@ object MainApp {
             if (code == verifyCode) {
                 loginUI.info("Channel Verification Completed Successfully!")
                 saveConfig()
+                bot.execute(SendMessage(finalChatID,"Verification Completed!"))
                 loginUI.dispose()
             }
         }

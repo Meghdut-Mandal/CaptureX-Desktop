@@ -24,6 +24,7 @@ public class LoginUI extends javax.swing.JFrame
     {
         setUpLookFeel();
         initComponents();
+        setLocationRelativeTo(null);
         verify_panel.setVisible(false);
     }
 
