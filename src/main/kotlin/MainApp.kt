@@ -14,23 +14,19 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
-import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.imageio.ImageIO
 import kotlin.math.absoluteValue
 import kotlin.random.Random
-import kotlin.system.exitProcess
 
 
 object MainApp {
 
     private val loginUI = LoginUI()
 
-    private val configFile = File("capture.prop")
+    private val config = ConfigProperties("capture.prop")
     const val CHAT_ID = "chat_id"
     const val BOT_ID = "bot_id"
-    private val screenRect = Rectangle(Toolkit.getDefaultToolkit().screenSize)
-    private val properties = Properties()
     private val gson = Gson()
     private var chatIdList = mutableListOf<Long>()
     private var verifyCode = 0
@@ -40,8 +36,8 @@ object MainApp {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        loadProps()
-        val bot = TelegramBot(properties[BOT_ID].toString())
+        config.loadProps()
+        val bot = TelegramBot(config[BOT_ID])
 
         bot.setUpdatesListener { updates: List<Update?>? ->
             handleUpdates(updates, bot)
@@ -49,11 +45,11 @@ object MainApp {
         }
 
 
-        if (properties[CHAT_ID]==null) {
+        if (config[CHAT_ID] == null) {
             showLogin(bot)
         } else {
             isVerified = true
-            finalChatID = properties[CHAT_ID].toString().toLong()
+            finalChatID = config[CHAT_ID].toString().toLong()
             println(">MainApp>main  Verified   ")
         }
     }
@@ -122,23 +118,10 @@ object MainApp {
         return codeList
     }
 
-    fun TelegramBot.sendNudes() {
-        val msg: SendPhoto = SendPhoto(finalChatID, File("test.png")).caption("ssxsxs")
-        execute(msg)
-    }
 
     private fun saveConfig() {
-        properties[CHAT_ID] = finalChatID.toString()
-        configFile.delete()
-        configFile.outputStream().use {
-            properties.store(it, "${System.currentTimeMillis()}")
-        }
-    }
-
-    private fun loadProps() {
-        configFile.inputStream().use {
-            properties.load(it)
-        }
+        config[CHAT_ID] = finalChatID.toString()
+        config.saveConfig()
     }
 
     private fun encryptChatId(chatID: Long?): String? {
@@ -146,22 +129,19 @@ object MainApp {
     }
 
     private fun decryptChatId(chatID: String): Long {
-
         return chatID.toLong(36) * -1
     }
 
 
-    private val robot = Robot()
-
-    private fun TelegramBot.sendSS(messageId:Int) = tasks.execute {
-        val capture: BufferedImage = robot.createScreenCapture(screenRect)
-        val bios = ByteArrayOutputStream()
-        ImageIO.write(capture, "png", bios)
-        val photo = SendPhoto(finalChatID, bios.toByteArray()).caption("Screen Shot")
+    private fun TelegramBot.sendSS(messageId: Int) = tasks.execute {
+        val bytes = ImageUtils.getScreenShot()
+        val photo = SendPhoto(finalChatID, bytes)
         execute(photo)
-        val del=DeleteMessage(finalChatID,messageId)
+        val del = DeleteMessage(finalChatID, messageId)
         println(">MainApp>sendSS  Sent pic  ")
         execute(del)
     }
+
+
 }
 
