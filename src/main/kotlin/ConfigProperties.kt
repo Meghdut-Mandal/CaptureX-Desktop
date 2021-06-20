@@ -15,6 +15,11 @@ class ConfigProperties(fileName: String) {
     }
 
     fun loadProps() {
+
+        if(!configFile.exists()){
+            throw IllegalStateException("A capture.prop file is required in the home directory!")
+        }
+
         configFile.inputStream().use {
             properties.load(it)
         }

@@ -8,9 +8,13 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.GatewayIntent
+import java.awt.Toolkit
+import java.awt.datatransfer.StringSelection
 
 
 object DiscordApp : ListenerAdapter() {
+    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+
     private val config = ConfigProperties("capture.prop").apply {
         loadProps()
     }
@@ -39,6 +43,12 @@ object DiscordApp : ListenerAdapter() {
                 .queue {
                     println("discord>DiscordApp>onMessageReceived   ")
                 }
+        } else if (msg.contentRaw.startsWith("#c", true)) {
+            val myString = msg.contentRaw.substring(2)
+            println("discord>DiscordApp>onMessageReceived  Copied $myString into clip board ")
+
+            val stringSelection = StringSelection(myString)
+            clipboard.setContents(stringSelection, null)
         }
     }
 
