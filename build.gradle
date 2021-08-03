@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
     // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
     implementation  "net.dv8tion:JDA:4.2.1_253"
 
