@@ -80,7 +80,7 @@ object DiscordApp : ListenerAdapter() {
             """
             Welcome to CaptureXtream 
             First step is to select a unique channel,
-            and send this otp $otp as a PINNED text message there
+            and send this otp $otp as text message there
             
             Waiting for Events.....
         """.trimIndent()
