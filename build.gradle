@@ -21,6 +21,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
     // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
     implementation  "net.dv8tion:JDA:4.2.1_253"
+    implementation "org.slf4j:slf4j-simple:1.6.1"
 
 }
 

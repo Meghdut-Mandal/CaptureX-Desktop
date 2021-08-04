@@ -5,35 +5,29 @@ import ImageUtils
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.entities.MessageChannel
+import net.dv8tion.jda.api.events.GenericEvent
+import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.GatewayIntent
-import java.awt.Button
+import org.slf4j.Logger
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
-import javax.swing.JFrame
+import kotlin.random.Random
 
 
 object DiscordApp : ListenerAdapter() {
     val clipboard = Toolkit.getDefaultToolkit().systemClipboard
-    lateinit var channel:MessageChannel
+    var channelName: String = ""
+    var otp: String = ""
     private val config = ConfigProperties("capture.prop").apply {
         loadProps()
     }
 
+
     @JvmStatic
     fun main(args: Array<String>) {
-        val  f= JFrame("test");
-        val b =Button("take ss ");
-        b.addActionListener{
-            channel.sendMessage("d").queue()
-        }
-        f.setSize(100,100);
-        b.setSize(50,50);
-        f.add(b)
-        f.isAlwaysOnTop=true
-        f.isVisible=true
+
         val builder: JDABuilder = JDABuilder.createLight(
             config["discord_bot_id"],
             GatewayIntent.GUILD_MESSAGES,
@@ -41,7 +35,6 @@ object DiscordApp : ListenerAdapter() {
         ).addEventListeners(DiscordApp)
         builder.setBulkDeleteSplittingEnabled(false)
         builder.setActivity(Activity.watching("Taking Screenshots"))
-
         builder.build()
 
 
@@ -50,8 +43,24 @@ object DiscordApp : ListenerAdapter() {
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
         val msg: Message = event.message
+        if (channelName == "") {
+            println("Received  Message ${msg.contentRaw}  in ${msg.channel.name}  ")
+            if (msg.contentRaw == otp) {
+                println("OTP verified ! Connected to Channel ${msg.channel.name}")
+                channelName = msg.channel.name
+                otp = ""
+            }
+        } else
+            postVerification(msg, event)
+    }
+
+    fun postVerification(
+        msg: Message,
+        event: MessageReceivedEvent
+    ) {
         if (msg.contentRaw.length == 1) {
-            channel = event.channel
+            val channel = event.channel
+
             channel.sendFile(ImageUtils.getScreenShot(), "ss.jpg")
                 .queue {
                     println("discord>    DiscordApp>onMessageReceived   ")
@@ -63,6 +72,20 @@ object DiscordApp : ListenerAdapter() {
             val stringSelection = StringSelection(myString)
             clipboard.setContents(stringSelection, null)
         }
+    }
+
+    override fun onReady(event: ReadyEvent) {
+        otp = Random.nextInt(1000, 9999).toString()
+        println(
+            """
+            Welcome to CaptureXtream 
+            First step is to select a unique channel,
+            and send this otp $otp as a PINNED text message there
+            
+            Waiting for Events.....
+        """.trimIndent()
+        )
+
     }
 
 
