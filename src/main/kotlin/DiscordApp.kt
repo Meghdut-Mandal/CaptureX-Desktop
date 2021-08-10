@@ -1,9 +1,3 @@
-package discord
-
-import ConfigProperties
-import ImageUtils
-import TyperXView
-import TyperXWorker
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.entities.Message

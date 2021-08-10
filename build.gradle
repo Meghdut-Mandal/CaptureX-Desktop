@@ -7,7 +7,7 @@ plugins {
 
 group ''
 version '1.0'
-mainClassName = "discord.DiscordApp"
+mainClassName = "DiscordApp"
 
 repositories {
     mavenCentral()
