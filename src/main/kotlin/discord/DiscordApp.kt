@@ -2,28 +2,28 @@ package discord
 
 import ConfigProperties
 import ImageUtils
+import TyperXView
+import TyperXWorker
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.events.GenericEvent
 import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.GatewayIntent
-import org.slf4j.Logger
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import kotlin.random.Random
 
 
-object DiscordApp : ListenerAdapter() {
+object DiscordApp : ListenerAdapter(), TyperXView {
     val clipboard = Toolkit.getDefaultToolkit().systemClipboard
     var channelName: String = ""
     var otp: String = ""
     private val config = ConfigProperties("capture.prop").apply {
         loadProps()
     }
-
+    val typerWorker = TyperXWorker(this)
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -71,6 +71,16 @@ object DiscordApp : ListenerAdapter() {
 
             val stringSelection = StringSelection(myString)
             clipboard.setContents(stringSelection, null)
+        } else if (msg.contentRaw.startsWith("#p", true)) {
+            val text = msg.contentRaw.substring(2)
+            println("discord>DiscordApp>onMessageReceived  Pasting $text into area removing spaces ")
+            typerWorker.isRemoveFrontSpaces = true
+            typerWorker.startRequest(text);
+        } else if (msg.contentRaw.startsWith("#z", true)) {
+            val text = msg.contentRaw.substring(2)
+            println("discord>DiscordApp>onMessageReceived  Pasting $text into area. ")
+            typerWorker.isRemoveFrontSpaces = false
+            typerWorker.startRequest(text);
         }
     }
 
@@ -86,6 +96,22 @@ object DiscordApp : ListenerAdapter() {
         """.trimIndent()
         )
 
+    }
+
+    override fun startUI() {
+        println("discord>DiscordApp>startUI  TyperX Started Typing   ")
+    }
+
+    override fun stopUI() {
+        println("discord>DiscordApp>startUI  TyperX stopped Typing   ")
+    }
+
+    override fun setProgress(progress: Int) {
+        print("\rdiscord>DiscordApp>startUI Typing $progress %  ")
+    }
+
+    override fun setStatus(status: String?) {
+        println("discord>DiscordApp>startUI  $status   ")
     }
 
 
