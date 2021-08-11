@@ -117,7 +117,7 @@ public class TyperXWorker
             try{
                 Thread.sleep(1000L);
             } catch (InterruptedException ex) {
-                Logger.getLogger(TyperXFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TyperXView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         this.xFrame.setStatus("Running  now..");
@@ -146,7 +146,7 @@ public class TyperXWorker
 //                }
             } catch (Exception ex) {
 
-                Logger.getLogger(TyperXFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TyperXView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         xFrame.startUI();
