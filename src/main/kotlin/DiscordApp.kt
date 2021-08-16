@@ -38,7 +38,7 @@ object DiscordApp : ListenerAdapter(), TyperXView {
     override fun onMessageReceived(event: MessageReceivedEvent) {
         val msg: Message = event.message
         if (channelName == "") {
-            println("Received  Message ${msg.contentRaw}  in ${msg.channel.name}  ")
+            println("Received  Message ${msg.contentRaw}  in ${msg.channel.id}  ")
             if (msg.contentRaw == otp) {
                 println("OTP verified ! Connected to Channel ${msg.channel.name}")
                 channelName = msg.channel.name
