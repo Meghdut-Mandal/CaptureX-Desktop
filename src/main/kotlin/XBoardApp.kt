@@ -13,7 +13,8 @@ object XBoardApp : ListenerAdapter(), TyperXView {
         loadProps()
     }
 
-    val jda = JDABuilder.createLight(
+    val jda by lazy {
+        JDABuilder.createLight(
         config["discord_bot_id"],
         GatewayIntent.GUILD_MESSAGES,
         GatewayIntent.DIRECT_MESSAGES
@@ -21,12 +22,14 @@ object XBoardApp : ListenerAdapter(), TyperXView {
         setBulkDeleteSplittingEnabled(false)
         setActivity(Activity.watching("Taking Screenshots"))
     }.build()
+    }
 
     val updatesChannel by lazy { jda.getTextChannelById(876910605225836614)!! }
     val requestsChannel by lazy { jda.getTextChannelById(876910144028553306)!! }
     val  deviceId= Random.nextInt(10000)
     @JvmStatic
     fun main(args: Array<String>) {
+        val dt= jda.toString()
        println("Meh!")
     }
 
