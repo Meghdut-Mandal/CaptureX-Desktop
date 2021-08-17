@@ -3,7 +3,7 @@ import "google/protobuf/any.proto";
 package tutorial;
 
 option java_multiple_files = true;
-option java_package = "";
+option java_package = "proto";
 option java_outer_classname = "MessageOuterClass";
 
 message Message {
