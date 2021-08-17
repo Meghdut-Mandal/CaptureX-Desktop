@@ -13,14 +13,9 @@ public interface MessageOrBuilder extends
   int getId();
 
   /**
-   * <code>string dest = 2;</code>
+   * <code>int32 dest = 2;</code>
    */
-  java.lang.String getDest();
-  /**
-   * <code>string dest = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getDestBytes();
+  int getDest();
 
   /**
    * <code>.tutorial.MessageType messageType = 3;</code>

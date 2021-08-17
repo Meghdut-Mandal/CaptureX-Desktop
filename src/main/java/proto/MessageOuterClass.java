@@ -35,7 +35,7 @@ public final class MessageOuterClass {
     java.lang.String[] descriptorData = {
       "\n\rmessage.proto\022\010tutorial\032\031google/protob" +
       "uf/any.proto\"\267\001\n\007Message\022\n\n\002id\030\001 \001(\005\022\014\n\004" +
-      "dest\030\002 \001(\t\022*\n\013messageType\030\003 \001(\0162\025.tutori" +
+      "dest\030\002 \001(\005\022*\n\013messageType\030\003 \001(\0162\025.tutori" +
       "al.MessageType\022,\n\013joinPayload\030\004 \001(\0132\025.tu" +
       "torial.JoinPayloadH\000\022\025\n\013textPayload\030\005 \001(" +
       "\tH\000\022\026\n\014bytesPayload\030\006 \001(\014H\000B\t\n\007payload\"a" +

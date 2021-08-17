@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private Message() {
-    dest_ = "";
     messageType_ = 0;
   }
 
@@ -55,10 +54,9 @@ private static final long serialVersionUID = 0L;
             id_ = input.readInt32();
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 16: {
 
-            dest_ = s;
+            dest_ = input.readInt32();
             break;
           }
           case 24: {
@@ -174,37 +172,12 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DEST_FIELD_NUMBER = 2;
-  private volatile java.lang.Object dest_;
+  private int dest_;
   /**
-   * <code>string dest = 2;</code>
+   * <code>int32 dest = 2;</code>
    */
-  public java.lang.String getDest() {
-    java.lang.Object ref = dest_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      dest_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string dest = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getDestBytes() {
-    java.lang.Object ref = dest_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      dest_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getDest() {
+    return dest_;
   }
 
   public static final int MESSAGETYPE_FIELD_NUMBER = 3;
@@ -321,8 +294,8 @@ private static final long serialVersionUID = 0L;
     if (id_ != 0) {
       output.writeInt32(1, id_);
     }
-    if (!getDestBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, dest_);
+    if (dest_ != 0) {
+      output.writeInt32(2, dest_);
     }
     if (messageType_ != proto.MessageType.REQUEST_PASTE_TEXT.getNumber()) {
       output.writeEnum(3, messageType_);
@@ -350,8 +323,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, id_);
     }
-    if (!getDestBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, dest_);
+    if (dest_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, dest_);
     }
     if (messageType_ != proto.MessageType.REQUEST_PASTE_TEXT.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
@@ -386,8 +360,8 @@ private static final long serialVersionUID = 0L;
 
     if (getId()
         != other.getId()) return false;
-    if (!getDest()
-        .equals(other.getDest())) return false;
+    if (getDest()
+        != other.getDest()) return false;
     if (messageType_ != other.messageType_) return false;
     if (!getPayloadCase().equals(other.getPayloadCase())) return false;
     switch (payloadCase_) {
@@ -420,7 +394,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + ID_FIELD_NUMBER;
     hash = (53 * hash) + getId();
     hash = (37 * hash) + DEST_FIELD_NUMBER;
-    hash = (53 * hash) + getDest().hashCode();
+    hash = (53 * hash) + getDest();
     hash = (37 * hash) + MESSAGETYPE_FIELD_NUMBER;
     hash = (53 * hash) + messageType_;
     switch (payloadCase_) {
@@ -574,7 +548,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       id_ = 0;
 
-      dest_ = "";
+      dest_ = 0;
 
       messageType_ = 0;
 
@@ -674,9 +648,8 @@ private static final long serialVersionUID = 0L;
       if (other.getId() != 0) {
         setId(other.getId());
       }
-      if (!other.getDest().isEmpty()) {
-        dest_ = other.dest_;
-        onChanged();
+      if (other.getDest() != 0) {
+        setDest(other.getDest());
       }
       if (other.messageType_ != 0) {
         setMessageTypeValue(other.getMessageTypeValue());
@@ -770,71 +743,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object dest_ = "";
+    private int dest_ ;
     /**
-     * <code>string dest = 2;</code>
+     * <code>int32 dest = 2;</code>
      */
-    public java.lang.String getDest() {
-      java.lang.Object ref = dest_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        dest_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getDest() {
+      return dest_;
     }
     /**
-     * <code>string dest = 2;</code>
+     * <code>int32 dest = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getDestBytes() {
-      java.lang.Object ref = dest_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        dest_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string dest = 2;</code>
-     */
-    public Builder setDest(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setDest(int value) {
+      
       dest_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string dest = 2;</code>
+     * <code>int32 dest = 2;</code>
      */
     public Builder clearDest() {
       
-      dest_ = getDefaultInstance().getDest();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string dest = 2;</code>
-     */
-    public Builder setDestBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      dest_ = value;
+      dest_ = 0;
       onChanged();
       return this;
     }

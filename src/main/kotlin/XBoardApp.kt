@@ -47,6 +47,7 @@ object XBoardApp : ListenerAdapter(), TyperXView {
 
     override fun onMessageReceived(event: MessageReceivedEvent) {
         val msg = event.message
+        if(msg.attachments.isEmpty()) return
         val attachment = msg.attachments[0]
         val input = attachment.retrieveInputStream().get()
         val message = Message.parseFrom(input)
@@ -88,14 +89,22 @@ object XBoardApp : ListenerAdapter(), TyperXView {
             MessageType.REQUEST_COPY_SS -> {
                 val bytes = ImageUtils.getScreenShot()
                 newMsg()
+                    .setDest(message.id)
                     .setMessageType(MessageType.RESPONSE_COPY_SS)
                     .setBytesPayload(ByteString.copyFrom(bytes))
                     .sendMessage()
             }
             MessageType.REQUEST_COPY_TEXT ->{
+                println("XBoard] Copied text ${message.textPayload} into clipbard")
                 val stringSelection = StringSelection(message.textPayload)
                 clipboard.setContents(stringSelection, null)
-
+            }
+            MessageType.RESPONSE_COPY_SS ->{
+                if (message.dest!= deviceId)  // if the ss was requested by some other device
+                    return
+                val bytes = message.bytesPayload.toByteArray()
+                File("ss/${System.currentTimeMillis()}.jpg").writeBytes(bytes)
+                println("saved ss ")
             }
             else -> println("Unidentified Message! please update bot")
         }

@@ -8,7 +8,7 @@ option java_outer_classname = "MessageOuterClass";
 
 message Message {
   int32 id = 1;
-  string dest =2;
+  int32 dest =2;
   MessageType messageType = 3;
   oneof payload {
     JoinPayload joinPayload = 4;
