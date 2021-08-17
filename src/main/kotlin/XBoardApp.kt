@@ -78,9 +78,10 @@ object XBoardApp : ListenerAdapter(), TyperXView {
     }
 
     private fun processMessage(message: Message) {
-        if(message.id== deviceId) {
+        if(message.id==deviceId || (message.dest>0 && message.dest!= deviceId) ) {
             return
         }
+
         when (message.messageType) {
             MessageType.UPDATE_JOIN -> {
                 val unpack = message.joinPayload
@@ -100,8 +101,6 @@ object XBoardApp : ListenerAdapter(), TyperXView {
                 clipboard.setContents(stringSelection, null)
             }
             MessageType.RESPONSE_COPY_SS ->{
-                if (message.dest!= deviceId)  // if the ss was requested by some other device
-                    return
                 val bytes = message.bytesPayload.toByteArray()
                 File("ss/${System.currentTimeMillis()}.jpg").writeBytes(bytes)
                 println("saved ss ")
@@ -111,7 +110,7 @@ object XBoardApp : ListenerAdapter(), TyperXView {
 
     }
 
-    private fun newMsg() = Message.newBuilder().setId(deviceId)
+    private fun newMsg() = Message.newBuilder().setId(deviceId).setDest(-1)
 
     private fun inputLoop() {
 
@@ -139,7 +138,10 @@ object XBoardApp : ListenerAdapter(), TyperXView {
 
 
     private fun takeSSFromRemote(deviceId: Int) {
-
+        newMsg()
+            .setDest(deviceId)
+            .setMessageType(MessageType.REQUEST_COPY_SS)
+            .sendMessage()
     }
 
     private fun copyToRemote(deviceId: Int) {
