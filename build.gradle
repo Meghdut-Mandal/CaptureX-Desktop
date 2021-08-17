@@ -5,6 +5,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 group ''
 version '1.0'
 mainClassName = "DiscordApp"
@@ -22,7 +24,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
     implementation  "net.dv8tion:JDA:4.2.1_253"
     implementation "org.slf4j:slf4j-simple:1.6.1"
-
 }
 
 jar {
