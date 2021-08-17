@@ -6,7 +6,7 @@ package proto;
 /**
  * Protobuf type {@code tutorial.JoinPayload}
  */
-public final class JoinPayload extends
+public  final class JoinPayload extends
     com.google.protobuf.GeneratedMessageV3 implements
     // @@protoc_insertion_point(message_implements:tutorial.JoinPayload)
     JoinPayloadOrBuilder {
@@ -122,9 +122,7 @@ private static final long serialVersionUID = 0L;
   private long timestamp_;
   /**
    * <code>int64 timestamp = 1;</code>
-   * @return The timestamp.
    */
-  @java.lang.Override
   public long getTimestamp() {
     return timestamp_;
   }
@@ -133,9 +131,7 @@ private static final long serialVersionUID = 0L;
   private int id_;
   /**
    * <code>int32 id = 2;</code>
-   * @return The id.
    */
-  @java.lang.Override
   public int getId() {
     return id_;
   }
@@ -144,9 +140,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object deviceType_;
   /**
    * <code>string deviceType = 3;</code>
-   * @return The deviceType.
    */
-  @java.lang.Override
   public java.lang.String getDeviceType() {
     java.lang.Object ref = deviceType_;
     if (ref instanceof java.lang.String) {
@@ -161,9 +155,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <code>string deviceType = 3;</code>
-   * @return The bytes for deviceType.
    */
-  @java.lang.Override
   public com.google.protobuf.ByteString
       getDeviceTypeBytes() {
     java.lang.Object ref = deviceType_;
@@ -182,9 +174,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object name_;
   /**
    * <code>string name = 4;</code>
-   * @return The name.
    */
-  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -199,9 +189,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <code>string name = 4;</code>
-   * @return The bytes for name.
    */
-  @java.lang.Override
   public com.google.protobuf.ByteString
       getNameBytes() {
     java.lang.Object ref = name_;
@@ -220,7 +208,6 @@ private static final long serialVersionUID = 0L;
   private com.google.protobuf.LazyStringList clipboard_;
   /**
    * <code>repeated string clipboard = 5;</code>
-   * @return A list containing the clipboard.
    */
   public com.google.protobuf.ProtocolStringList
       getClipboardList() {
@@ -228,23 +215,18 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <code>repeated string clipboard = 5;</code>
-   * @return The count of clipboard.
    */
   public int getClipboardCount() {
     return clipboard_.size();
   }
   /**
    * <code>repeated string clipboard = 5;</code>
-   * @param index The index of the element to return.
-   * @return The clipboard at the given index.
    */
   public java.lang.String getClipboard(int index) {
     return clipboard_.get(index);
   }
   /**
    * <code>repeated string clipboard = 5;</code>
-   * @param index The index of the value to return.
-   * @return The bytes of the clipboard at the given index.
    */
   public com.google.protobuf.ByteString
       getClipboardBytes(int index) {
@@ -644,16 +626,12 @@ private static final long serialVersionUID = 0L;
     private long timestamp_ ;
     /**
      * <code>int64 timestamp = 1;</code>
-     * @return The timestamp.
      */
-    @java.lang.Override
     public long getTimestamp() {
       return timestamp_;
     }
     /**
      * <code>int64 timestamp = 1;</code>
-     * @param value The timestamp to set.
-     * @return This builder for chaining.
      */
     public Builder setTimestamp(long value) {
       
@@ -663,7 +641,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>int64 timestamp = 1;</code>
-     * @return This builder for chaining.
      */
     public Builder clearTimestamp() {
       
@@ -675,16 +652,12 @@ private static final long serialVersionUID = 0L;
     private int id_ ;
     /**
      * <code>int32 id = 2;</code>
-     * @return The id.
      */
-    @java.lang.Override
     public int getId() {
       return id_;
     }
     /**
      * <code>int32 id = 2;</code>
-     * @param value The id to set.
-     * @return This builder for chaining.
      */
     public Builder setId(int value) {
       
@@ -694,7 +667,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>int32 id = 2;</code>
-     * @return This builder for chaining.
      */
     public Builder clearId() {
       
@@ -706,7 +678,6 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object deviceType_ = "";
     /**
      * <code>string deviceType = 3;</code>
-     * @return The deviceType.
      */
     public java.lang.String getDeviceType() {
       java.lang.Object ref = deviceType_;
@@ -722,7 +693,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string deviceType = 3;</code>
-     * @return The bytes for deviceType.
      */
     public com.google.protobuf.ByteString
         getDeviceTypeBytes() {
@@ -739,8 +709,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string deviceType = 3;</code>
-     * @param value The deviceType to set.
-     * @return This builder for chaining.
      */
     public Builder setDeviceType(
         java.lang.String value) {
@@ -754,7 +722,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string deviceType = 3;</code>
-     * @return This builder for chaining.
      */
     public Builder clearDeviceType() {
       
@@ -764,8 +731,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string deviceType = 3;</code>
-     * @param value The bytes for deviceType to set.
-     * @return This builder for chaining.
      */
     public Builder setDeviceTypeBytes(
         com.google.protobuf.ByteString value) {
@@ -782,7 +747,6 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object name_ = "";
     /**
      * <code>string name = 4;</code>
-     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -798,7 +762,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string name = 4;</code>
-     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -815,8 +778,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string name = 4;</code>
-     * @param value The name to set.
-     * @return This builder for chaining.
      */
     public Builder setName(
         java.lang.String value) {
@@ -830,7 +791,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string name = 4;</code>
-     * @return This builder for chaining.
      */
     public Builder clearName() {
       
@@ -840,8 +800,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string name = 4;</code>
-     * @param value The bytes for name to set.
-     * @return This builder for chaining.
      */
     public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -864,7 +822,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @return A list containing the clipboard.
      */
     public com.google.protobuf.ProtocolStringList
         getClipboardList() {
@@ -872,23 +829,18 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @return The count of clipboard.
      */
     public int getClipboardCount() {
       return clipboard_.size();
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @param index The index of the element to return.
-     * @return The clipboard at the given index.
      */
     public java.lang.String getClipboard(int index) {
       return clipboard_.get(index);
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the clipboard at the given index.
      */
     public com.google.protobuf.ByteString
         getClipboardBytes(int index) {
@@ -896,9 +848,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @param index The index to set the value at.
-     * @param value The clipboard to set.
-     * @return This builder for chaining.
      */
     public Builder setClipboard(
         int index, java.lang.String value) {
@@ -912,8 +861,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @param value The clipboard to add.
-     * @return This builder for chaining.
      */
     public Builder addClipboard(
         java.lang.String value) {
@@ -927,8 +874,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @param values The clipboard to add.
-     * @return This builder for chaining.
      */
     public Builder addAllClipboard(
         java.lang.Iterable<java.lang.String> values) {
@@ -940,7 +885,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @return This builder for chaining.
      */
     public Builder clearClipboard() {
       clipboard_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -950,8 +894,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>repeated string clipboard = 5;</code>
-     * @param value The bytes of the clipboard to add.
-     * @return This builder for chaining.
      */
     public Builder addClipboardBytes(
         com.google.protobuf.ByteString value) {

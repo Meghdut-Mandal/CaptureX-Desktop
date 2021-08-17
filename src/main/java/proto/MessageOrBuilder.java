@@ -9,45 +9,55 @@ public interface MessageOrBuilder extends
 
   /**
    * <code>int32 id = 1;</code>
-   * @return The id.
    */
   int getId();
 
   /**
    * <code>string dest = 2;</code>
-   * @return The dest.
    */
   java.lang.String getDest();
   /**
    * <code>string dest = 2;</code>
-   * @return The bytes for dest.
    */
   com.google.protobuf.ByteString
       getDestBytes();
 
   /**
    * <code>.tutorial.MessageType messageType = 3;</code>
-   * @return The enum numeric value on the wire for messageType.
    */
   int getMessageTypeValue();
   /**
    * <code>.tutorial.MessageType messageType = 3;</code>
-   * @return The messageType.
    */
   proto.MessageType getMessageType();
 
   /**
-   * <code>.google.protobuf.Any messagePayload = 4;</code>
-   * @return Whether the messagePayload field is set.
+   * <code>.tutorial.JoinPayload joinPayload = 4;</code>
    */
-  boolean hasMessagePayload();
+  boolean hasJoinPayload();
   /**
-   * <code>.google.protobuf.Any messagePayload = 4;</code>
-   * @return The messagePayload.
+   * <code>.tutorial.JoinPayload joinPayload = 4;</code>
    */
-  com.google.protobuf.Any getMessagePayload();
+  proto.JoinPayload getJoinPayload();
   /**
-   * <code>.google.protobuf.Any messagePayload = 4;</code>
+   * <code>.tutorial.JoinPayload joinPayload = 4;</code>
    */
-  com.google.protobuf.AnyOrBuilder getMessagePayloadOrBuilder();
+  proto.JoinPayloadOrBuilder getJoinPayloadOrBuilder();
+
+  /**
+   * <code>string textPayload = 5;</code>
+   */
+  java.lang.String getTextPayload();
+  /**
+   * <code>string textPayload = 5;</code>
+   */
+  com.google.protobuf.ByteString
+      getTextPayloadBytes();
+
+  /**
+   * <code>bytes bytesPayload = 6;</code>
+   */
+  com.google.protobuf.ByteString getBytesPayload();
+
+  public proto.Message.PayloadCase getPayloadCase();
 }

@@ -24,16 +24,6 @@ public final class MessageOuterClass {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_tutorial_JoinPayload_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_tutorial_TextPayload_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_tutorial_TextPayload_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_tutorial_ResponsePayload_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_tutorial_ResponsePayload_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -44,20 +34,20 @@ public final class MessageOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\rmessage.proto\022\010tutorial\032\031google/protob" +
-      "uf/any.proto\"}\n\007Message\022\n\n\002id\030\001 \001(\005\022\014\n\004d" +
-      "est\030\002 \001(\t\022*\n\013messageType\030\003 \001(\0162\025.tutoria" +
-      "l.MessageType\022,\n\016messagePayload\030\004 \001(\0132\024." +
-      "google.protobuf.Any\"a\n\013JoinPayload\022\021\n\tti" +
-      "mestamp\030\001 \001(\003\022\n\n\002id\030\002 \001(\005\022\022\n\ndeviceType\030" +
-      "\003 \001(\t\022\014\n\004name\030\004 \001(\t\022\021\n\tclipboard\030\005 \003(\t\"\033" +
-      "\n\013TextPayload\022\014\n\004text\030\001 \001(\t\"!\n\017ResponseP" +
-      "ayload\022\016\n\006status\030\001 \001(\t*\300\001\n\013MessageType\022\026" +
-      "\n\022REQUEST_PASTE_TEXT\020\000\022\027\n\023REQUEST_PASTE_" +
-      "IMAGE\020\001\022\023\n\017REQUEST_COPY_SS\020\002\022\027\n\023RESPONSE" +
-      "_PASTE_TEXT\020\003\022\030\n\024RESPONSE_PASTE_IMAGE\020\004\022" +
-      "\024\n\020RESPONSE_COPY_SS\020\005\022\017\n\013UPDATE_JOIN\020\006\022\021" +
-      "\n\rUPDATE_CLIENT\020\007B\034\n\005protoB\021MessageOuter" +
-      "ClassP\001b\006proto3"
+      "uf/any.proto\"\267\001\n\007Message\022\n\n\002id\030\001 \001(\005\022\014\n\004" +
+      "dest\030\002 \001(\t\022*\n\013messageType\030\003 \001(\0162\025.tutori" +
+      "al.MessageType\022,\n\013joinPayload\030\004 \001(\0132\025.tu" +
+      "torial.JoinPayloadH\000\022\025\n\013textPayload\030\005 \001(" +
+      "\tH\000\022\026\n\014bytesPayload\030\006 \001(\014H\000B\t\n\007payload\"a" +
+      "\n\013JoinPayload\022\021\n\ttimestamp\030\001 \001(\003\022\n\n\002id\030\002" +
+      " \001(\005\022\022\n\ndeviceType\030\003 \001(\t\022\014\n\004name\030\004 \001(\t\022\021" +
+      "\n\tclipboard\030\005 \003(\t*\327\001\n\013MessageType\022\026\n\022REQ" +
+      "UEST_PASTE_TEXT\020\000\022\027\n\023REQUEST_PASTE_IMAGE" +
+      "\020\001\022\023\n\017REQUEST_COPY_SS\020\002\022\027\n\023RESPONSE_PAST" +
+      "E_TEXT\020\003\022\030\n\024RESPONSE_PASTE_IMAGE\020\004\022\024\n\020RE" +
+      "SPONSE_COPY_SS\020\005\022\017\n\013UPDATE_JOIN\020\006\022\021\n\rUPD" +
+      "ATE_CLIENT\020\007\022\025\n\021REQUEST_COPY_TEXT\020\010B\034\n\005p" +
+      "rotoB\021MessageOuterClassP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -69,25 +59,13 @@ public final class MessageOuterClass {
     internal_static_tutorial_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tutorial_Message_descriptor,
-        new java.lang.String[] { "Id", "Dest", "MessageType", "MessagePayload", });
+        new java.lang.String[] { "Id", "Dest", "MessageType", "JoinPayload", "TextPayload", "BytesPayload", "Payload", });
     internal_static_tutorial_JoinPayload_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_tutorial_JoinPayload_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_tutorial_JoinPayload_descriptor,
         new java.lang.String[] { "Timestamp", "Id", "DeviceType", "Name", "Clipboard", });
-    internal_static_tutorial_TextPayload_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_tutorial_TextPayload_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_tutorial_TextPayload_descriptor,
-        new java.lang.String[] { "Text", });
-    internal_static_tutorial_ResponsePayload_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_tutorial_ResponsePayload_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_tutorial_ResponsePayload_descriptor,
-        new java.lang.String[] { "Status", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

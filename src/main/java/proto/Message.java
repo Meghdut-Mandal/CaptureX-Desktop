@@ -6,7 +6,7 @@ package proto;
 /**
  * Protobuf type {@code tutorial.Message}
  */
-public final class Message extends
+public  final class Message extends
     com.google.protobuf.GeneratedMessageV3 implements
     // @@protoc_insertion_point(message_implements:tutorial.Message)
     MessageOrBuilder {
@@ -68,16 +68,28 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 34: {
-            com.google.protobuf.Any.Builder subBuilder = null;
-            if (messagePayload_ != null) {
-              subBuilder = messagePayload_.toBuilder();
+            proto.JoinPayload.Builder subBuilder = null;
+            if (payloadCase_ == 4) {
+              subBuilder = ((proto.JoinPayload) payload_).toBuilder();
             }
-            messagePayload_ = input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry);
+            payload_ =
+                input.readMessage(proto.JoinPayload.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(messagePayload_);
-              messagePayload_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom((proto.JoinPayload) payload_);
+              payload_ = subBuilder.buildPartial();
             }
-
+            payloadCase_ = 4;
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+            payloadCase_ = 5;
+            payload_ = s;
+            break;
+          }
+          case 50: {
+            payloadCase_ = 6;
+            payload_ = input.readBytes();
             break;
           }
           default: {
@@ -112,13 +124,51 @@ private static final long serialVersionUID = 0L;
             proto.Message.class, proto.Message.Builder.class);
   }
 
+  private int payloadCase_ = 0;
+  private java.lang.Object payload_;
+  public enum PayloadCase
+      implements com.google.protobuf.Internal.EnumLite {
+    JOINPAYLOAD(4),
+    TEXTPAYLOAD(5),
+    BYTESPAYLOAD(6),
+    PAYLOAD_NOT_SET(0);
+    private final int value;
+    private PayloadCase(int value) {
+      this.value = value;
+    }
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static PayloadCase valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static PayloadCase forNumber(int value) {
+      switch (value) {
+        case 4: return JOINPAYLOAD;
+        case 5: return TEXTPAYLOAD;
+        case 6: return BYTESPAYLOAD;
+        case 0: return PAYLOAD_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
+
+  public PayloadCase
+  getPayloadCase() {
+    return PayloadCase.forNumber(
+        payloadCase_);
+  }
+
   public static final int ID_FIELD_NUMBER = 1;
   private int id_;
   /**
    * <code>int32 id = 1;</code>
-   * @return The id.
    */
-  @java.lang.Override
   public int getId() {
     return id_;
   }
@@ -127,9 +177,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object dest_;
   /**
    * <code>string dest = 2;</code>
-   * @return The dest.
    */
-  @java.lang.Override
   public java.lang.String getDest() {
     java.lang.Object ref = dest_;
     if (ref instanceof java.lang.String) {
@@ -144,9 +192,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <code>string dest = 2;</code>
-   * @return The bytes for dest.
    */
-  @java.lang.Override
   public com.google.protobuf.ByteString
       getDestBytes() {
     java.lang.Object ref = dest_;
@@ -165,45 +211,97 @@ private static final long serialVersionUID = 0L;
   private int messageType_;
   /**
    * <code>.tutorial.MessageType messageType = 3;</code>
-   * @return The enum numeric value on the wire for messageType.
    */
-  @java.lang.Override public int getMessageTypeValue() {
+  public int getMessageTypeValue() {
     return messageType_;
   }
   /**
    * <code>.tutorial.MessageType messageType = 3;</code>
-   * @return The messageType.
    */
-  @java.lang.Override public proto.MessageType getMessageType() {
+  public proto.MessageType getMessageType() {
     @SuppressWarnings("deprecation")
     proto.MessageType result = proto.MessageType.valueOf(messageType_);
     return result == null ? proto.MessageType.UNRECOGNIZED : result;
   }
 
-  public static final int MESSAGEPAYLOAD_FIELD_NUMBER = 4;
-  private com.google.protobuf.Any messagePayload_;
+  public static final int JOINPAYLOAD_FIELD_NUMBER = 4;
   /**
-   * <code>.google.protobuf.Any messagePayload = 4;</code>
-   * @return Whether the messagePayload field is set.
+   * <code>.tutorial.JoinPayload joinPayload = 4;</code>
    */
-  @java.lang.Override
-  public boolean hasMessagePayload() {
-    return messagePayload_ != null;
+  public boolean hasJoinPayload() {
+    return payloadCase_ == 4;
   }
   /**
-   * <code>.google.protobuf.Any messagePayload = 4;</code>
-   * @return The messagePayload.
+   * <code>.tutorial.JoinPayload joinPayload = 4;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.Any getMessagePayload() {
-    return messagePayload_ == null ? com.google.protobuf.Any.getDefaultInstance() : messagePayload_;
+  public proto.JoinPayload getJoinPayload() {
+    if (payloadCase_ == 4) {
+       return (proto.JoinPayload) payload_;
+    }
+    return proto.JoinPayload.getDefaultInstance();
   }
   /**
-   * <code>.google.protobuf.Any messagePayload = 4;</code>
+   * <code>.tutorial.JoinPayload joinPayload = 4;</code>
    */
-  @java.lang.Override
-  public com.google.protobuf.AnyOrBuilder getMessagePayloadOrBuilder() {
-    return getMessagePayload();
+  public proto.JoinPayloadOrBuilder getJoinPayloadOrBuilder() {
+    if (payloadCase_ == 4) {
+       return (proto.JoinPayload) payload_;
+    }
+    return proto.JoinPayload.getDefaultInstance();
+  }
+
+  public static final int TEXTPAYLOAD_FIELD_NUMBER = 5;
+  /**
+   * <code>string textPayload = 5;</code>
+   */
+  public java.lang.String getTextPayload() {
+    java.lang.Object ref = "";
+    if (payloadCase_ == 5) {
+      ref = payload_;
+    }
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      if (payloadCase_ == 5) {
+        payload_ = s;
+      }
+      return s;
+    }
+  }
+  /**
+   * <code>string textPayload = 5;</code>
+   */
+  public com.google.protobuf.ByteString
+      getTextPayloadBytes() {
+    java.lang.Object ref = "";
+    if (payloadCase_ == 5) {
+      ref = payload_;
+    }
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      if (payloadCase_ == 5) {
+        payload_ = b;
+      }
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int BYTESPAYLOAD_FIELD_NUMBER = 6;
+  /**
+   * <code>bytes bytesPayload = 6;</code>
+   */
+  public com.google.protobuf.ByteString getBytesPayload() {
+    if (payloadCase_ == 6) {
+      return (com.google.protobuf.ByteString) payload_;
+    }
+    return com.google.protobuf.ByteString.EMPTY;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -229,8 +327,15 @@ private static final long serialVersionUID = 0L;
     if (messageType_ != proto.MessageType.REQUEST_PASTE_TEXT.getNumber()) {
       output.writeEnum(3, messageType_);
     }
-    if (messagePayload_ != null) {
-      output.writeMessage(4, getMessagePayload());
+    if (payloadCase_ == 4) {
+      output.writeMessage(4, (proto.JoinPayload) payload_);
+    }
+    if (payloadCase_ == 5) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, payload_);
+    }
+    if (payloadCase_ == 6) {
+      output.writeBytes(
+          6, (com.google.protobuf.ByteString) payload_);
     }
     unknownFields.writeTo(output);
   }
@@ -252,9 +357,17 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, messageType_);
     }
-    if (messagePayload_ != null) {
+    if (payloadCase_ == 4) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(4, getMessagePayload());
+        .computeMessageSize(4, (proto.JoinPayload) payload_);
+    }
+    if (payloadCase_ == 5) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, payload_);
+    }
+    if (payloadCase_ == 6) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(
+            6, (com.google.protobuf.ByteString) payload_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -276,10 +389,22 @@ private static final long serialVersionUID = 0L;
     if (!getDest()
         .equals(other.getDest())) return false;
     if (messageType_ != other.messageType_) return false;
-    if (hasMessagePayload() != other.hasMessagePayload()) return false;
-    if (hasMessagePayload()) {
-      if (!getMessagePayload()
-          .equals(other.getMessagePayload())) return false;
+    if (!getPayloadCase().equals(other.getPayloadCase())) return false;
+    switch (payloadCase_) {
+      case 4:
+        if (!getJoinPayload()
+            .equals(other.getJoinPayload())) return false;
+        break;
+      case 5:
+        if (!getTextPayload()
+            .equals(other.getTextPayload())) return false;
+        break;
+      case 6:
+        if (!getBytesPayload()
+            .equals(other.getBytesPayload())) return false;
+        break;
+      case 0:
+      default:
     }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
@@ -298,9 +423,21 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getDest().hashCode();
     hash = (37 * hash) + MESSAGETYPE_FIELD_NUMBER;
     hash = (53 * hash) + messageType_;
-    if (hasMessagePayload()) {
-      hash = (37 * hash) + MESSAGEPAYLOAD_FIELD_NUMBER;
-      hash = (53 * hash) + getMessagePayload().hashCode();
+    switch (payloadCase_) {
+      case 4:
+        hash = (37 * hash) + JOINPAYLOAD_FIELD_NUMBER;
+        hash = (53 * hash) + getJoinPayload().hashCode();
+        break;
+      case 5:
+        hash = (37 * hash) + TEXTPAYLOAD_FIELD_NUMBER;
+        hash = (53 * hash) + getTextPayload().hashCode();
+        break;
+      case 6:
+        hash = (37 * hash) + BYTESPAYLOAD_FIELD_NUMBER;
+        hash = (53 * hash) + getBytesPayload().hashCode();
+        break;
+      case 0:
+      default:
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -441,12 +578,8 @@ private static final long serialVersionUID = 0L;
 
       messageType_ = 0;
 
-      if (messagePayloadBuilder_ == null) {
-        messagePayload_ = null;
-      } else {
-        messagePayload_ = null;
-        messagePayloadBuilder_ = null;
-      }
+      payloadCase_ = 0;
+      payload_ = null;
       return this;
     }
 
@@ -476,11 +609,20 @@ private static final long serialVersionUID = 0L;
       result.id_ = id_;
       result.dest_ = dest_;
       result.messageType_ = messageType_;
-      if (messagePayloadBuilder_ == null) {
-        result.messagePayload_ = messagePayload_;
-      } else {
-        result.messagePayload_ = messagePayloadBuilder_.build();
+      if (payloadCase_ == 4) {
+        if (joinPayloadBuilder_ == null) {
+          result.payload_ = payload_;
+        } else {
+          result.payload_ = joinPayloadBuilder_.build();
+        }
       }
+      if (payloadCase_ == 5) {
+        result.payload_ = payload_;
+      }
+      if (payloadCase_ == 6) {
+        result.payload_ = payload_;
+      }
+      result.payloadCase_ = payloadCase_;
       onBuilt();
       return result;
     }
@@ -539,8 +681,24 @@ private static final long serialVersionUID = 0L;
       if (other.messageType_ != 0) {
         setMessageTypeValue(other.getMessageTypeValue());
       }
-      if (other.hasMessagePayload()) {
-        mergeMessagePayload(other.getMessagePayload());
+      switch (other.getPayloadCase()) {
+        case JOINPAYLOAD: {
+          mergeJoinPayload(other.getJoinPayload());
+          break;
+        }
+        case TEXTPAYLOAD: {
+          payloadCase_ = 5;
+          payload_ = other.payload_;
+          onChanged();
+          break;
+        }
+        case BYTESPAYLOAD: {
+          setBytesPayload(other.getBytesPayload());
+          break;
+        }
+        case PAYLOAD_NOT_SET: {
+          break;
+        }
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -570,20 +728,31 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int payloadCase_ = 0;
+    private java.lang.Object payload_;
+    public PayloadCase
+        getPayloadCase() {
+      return PayloadCase.forNumber(
+          payloadCase_);
+    }
+
+    public Builder clearPayload() {
+      payloadCase_ = 0;
+      payload_ = null;
+      onChanged();
+      return this;
+    }
+
 
     private int id_ ;
     /**
      * <code>int32 id = 1;</code>
-     * @return The id.
      */
-    @java.lang.Override
     public int getId() {
       return id_;
     }
     /**
      * <code>int32 id = 1;</code>
-     * @param value The id to set.
-     * @return This builder for chaining.
      */
     public Builder setId(int value) {
       
@@ -593,7 +762,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>int32 id = 1;</code>
-     * @return This builder for chaining.
      */
     public Builder clearId() {
       
@@ -605,7 +773,6 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object dest_ = "";
     /**
      * <code>string dest = 2;</code>
-     * @return The dest.
      */
     public java.lang.String getDest() {
       java.lang.Object ref = dest_;
@@ -621,7 +788,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string dest = 2;</code>
-     * @return The bytes for dest.
      */
     public com.google.protobuf.ByteString
         getDestBytes() {
@@ -638,8 +804,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string dest = 2;</code>
-     * @param value The dest to set.
-     * @return This builder for chaining.
      */
     public Builder setDest(
         java.lang.String value) {
@@ -653,7 +817,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string dest = 2;</code>
-     * @return This builder for chaining.
      */
     public Builder clearDest() {
       
@@ -663,8 +826,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>string dest = 2;</code>
-     * @param value The bytes for dest to set.
-     * @return This builder for chaining.
      */
     public Builder setDestBytes(
         com.google.protobuf.ByteString value) {
@@ -681,27 +842,21 @@ private static final long serialVersionUID = 0L;
     private int messageType_ = 0;
     /**
      * <code>.tutorial.MessageType messageType = 3;</code>
-     * @return The enum numeric value on the wire for messageType.
      */
-    @java.lang.Override public int getMessageTypeValue() {
+    public int getMessageTypeValue() {
       return messageType_;
     }
     /**
      * <code>.tutorial.MessageType messageType = 3;</code>
-     * @param value The enum numeric value on the wire for messageType to set.
-     * @return This builder for chaining.
      */
     public Builder setMessageTypeValue(int value) {
-      
       messageType_ = value;
       onChanged();
       return this;
     }
     /**
      * <code>.tutorial.MessageType messageType = 3;</code>
-     * @return The messageType.
      */
-    @java.lang.Override
     public proto.MessageType getMessageType() {
       @SuppressWarnings("deprecation")
       proto.MessageType result = proto.MessageType.valueOf(messageType_);
@@ -709,8 +864,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>.tutorial.MessageType messageType = 3;</code>
-     * @param value The messageType to set.
-     * @return This builder for chaining.
      */
     public Builder setMessageType(proto.MessageType value) {
       if (value == null) {
@@ -723,7 +876,6 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <code>.tutorial.MessageType messageType = 3;</code>
-     * @return This builder for chaining.
      */
     public Builder clearMessageType() {
       
@@ -732,123 +884,253 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.Any messagePayload_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> messagePayloadBuilder_;
+        proto.JoinPayload, proto.JoinPayload.Builder, proto.JoinPayloadOrBuilder> joinPayloadBuilder_;
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
-     * @return Whether the messagePayload field is set.
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public boolean hasMessagePayload() {
-      return messagePayloadBuilder_ != null || messagePayload_ != null;
+    public boolean hasJoinPayload() {
+      return payloadCase_ == 4;
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
-     * @return The messagePayload.
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public com.google.protobuf.Any getMessagePayload() {
-      if (messagePayloadBuilder_ == null) {
-        return messagePayload_ == null ? com.google.protobuf.Any.getDefaultInstance() : messagePayload_;
+    public proto.JoinPayload getJoinPayload() {
+      if (joinPayloadBuilder_ == null) {
+        if (payloadCase_ == 4) {
+          return (proto.JoinPayload) payload_;
+        }
+        return proto.JoinPayload.getDefaultInstance();
       } else {
-        return messagePayloadBuilder_.getMessage();
+        if (payloadCase_ == 4) {
+          return joinPayloadBuilder_.getMessage();
+        }
+        return proto.JoinPayload.getDefaultInstance();
       }
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public Builder setMessagePayload(com.google.protobuf.Any value) {
-      if (messagePayloadBuilder_ == null) {
+    public Builder setJoinPayload(proto.JoinPayload value) {
+      if (joinPayloadBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        messagePayload_ = value;
+        payload_ = value;
         onChanged();
       } else {
-        messagePayloadBuilder_.setMessage(value);
+        joinPayloadBuilder_.setMessage(value);
       }
-
+      payloadCase_ = 4;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public Builder setMessagePayload(
-        com.google.protobuf.Any.Builder builderForValue) {
-      if (messagePayloadBuilder_ == null) {
-        messagePayload_ = builderForValue.build();
+    public Builder setJoinPayload(
+        proto.JoinPayload.Builder builderForValue) {
+      if (joinPayloadBuilder_ == null) {
+        payload_ = builderForValue.build();
         onChanged();
       } else {
-        messagePayloadBuilder_.setMessage(builderForValue.build());
+        joinPayloadBuilder_.setMessage(builderForValue.build());
       }
-
+      payloadCase_ = 4;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public Builder mergeMessagePayload(com.google.protobuf.Any value) {
-      if (messagePayloadBuilder_ == null) {
-        if (messagePayload_ != null) {
-          messagePayload_ =
-            com.google.protobuf.Any.newBuilder(messagePayload_).mergeFrom(value).buildPartial();
+    public Builder mergeJoinPayload(proto.JoinPayload value) {
+      if (joinPayloadBuilder_ == null) {
+        if (payloadCase_ == 4 &&
+            payload_ != proto.JoinPayload.getDefaultInstance()) {
+          payload_ = proto.JoinPayload.newBuilder((proto.JoinPayload) payload_)
+              .mergeFrom(value).buildPartial();
         } else {
-          messagePayload_ = value;
+          payload_ = value;
         }
         onChanged();
       } else {
-        messagePayloadBuilder_.mergeFrom(value);
+        if (payloadCase_ == 4) {
+          joinPayloadBuilder_.mergeFrom(value);
+        }
+        joinPayloadBuilder_.setMessage(value);
       }
-
+      payloadCase_ = 4;
       return this;
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public Builder clearMessagePayload() {
-      if (messagePayloadBuilder_ == null) {
-        messagePayload_ = null;
-        onChanged();
+    public Builder clearJoinPayload() {
+      if (joinPayloadBuilder_ == null) {
+        if (payloadCase_ == 4) {
+          payloadCase_ = 0;
+          payload_ = null;
+          onChanged();
+        }
       } else {
-        messagePayload_ = null;
-        messagePayloadBuilder_ = null;
+        if (payloadCase_ == 4) {
+          payloadCase_ = 0;
+          payload_ = null;
+        }
+        joinPayloadBuilder_.clear();
       }
-
       return this;
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public com.google.protobuf.Any.Builder getMessagePayloadBuilder() {
-      
-      onChanged();
-      return getMessagePayloadFieldBuilder().getBuilder();
+    public proto.JoinPayload.Builder getJoinPayloadBuilder() {
+      return getJoinPayloadFieldBuilder().getBuilder();
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
-    public com.google.protobuf.AnyOrBuilder getMessagePayloadOrBuilder() {
-      if (messagePayloadBuilder_ != null) {
-        return messagePayloadBuilder_.getMessageOrBuilder();
+    public proto.JoinPayloadOrBuilder getJoinPayloadOrBuilder() {
+      if ((payloadCase_ == 4) && (joinPayloadBuilder_ != null)) {
+        return joinPayloadBuilder_.getMessageOrBuilder();
       } else {
-        return messagePayload_ == null ?
-            com.google.protobuf.Any.getDefaultInstance() : messagePayload_;
+        if (payloadCase_ == 4) {
+          return (proto.JoinPayload) payload_;
+        }
+        return proto.JoinPayload.getDefaultInstance();
       }
     }
     /**
-     * <code>.google.protobuf.Any messagePayload = 4;</code>
+     * <code>.tutorial.JoinPayload joinPayload = 4;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
-        getMessagePayloadFieldBuilder() {
-      if (messagePayloadBuilder_ == null) {
-        messagePayloadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                getMessagePayload(),
+        proto.JoinPayload, proto.JoinPayload.Builder, proto.JoinPayloadOrBuilder> 
+        getJoinPayloadFieldBuilder() {
+      if (joinPayloadBuilder_ == null) {
+        if (!(payloadCase_ == 4)) {
+          payload_ = proto.JoinPayload.getDefaultInstance();
+        }
+        joinPayloadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            proto.JoinPayload, proto.JoinPayload.Builder, proto.JoinPayloadOrBuilder>(
+                (proto.JoinPayload) payload_,
                 getParentForChildren(),
                 isClean());
-        messagePayload_ = null;
+        payload_ = null;
       }
-      return messagePayloadBuilder_;
+      payloadCase_ = 4;
+      onChanged();;
+      return joinPayloadBuilder_;
+    }
+
+    /**
+     * <code>string textPayload = 5;</code>
+     */
+    public java.lang.String getTextPayload() {
+      java.lang.Object ref = "";
+      if (payloadCase_ == 5) {
+        ref = payload_;
+      }
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (payloadCase_ == 5) {
+          payload_ = s;
+        }
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string textPayload = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTextPayloadBytes() {
+      java.lang.Object ref = "";
+      if (payloadCase_ == 5) {
+        ref = payload_;
+      }
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        if (payloadCase_ == 5) {
+          payload_ = b;
+        }
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string textPayload = 5;</code>
+     */
+    public Builder setTextPayload(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  payloadCase_ = 5;
+      payload_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string textPayload = 5;</code>
+     */
+    public Builder clearTextPayload() {
+      if (payloadCase_ == 5) {
+        payloadCase_ = 0;
+        payload_ = null;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>string textPayload = 5;</code>
+     */
+    public Builder setTextPayloadBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      payloadCase_ = 5;
+      payload_ = value;
+      onChanged();
+      return this;
+    }
+
+    /**
+     * <code>bytes bytesPayload = 6;</code>
+     */
+    public com.google.protobuf.ByteString getBytesPayload() {
+      if (payloadCase_ == 6) {
+        return (com.google.protobuf.ByteString) payload_;
+      }
+      return com.google.protobuf.ByteString.EMPTY;
+    }
+    /**
+     * <code>bytes bytesPayload = 6;</code>
+     */
+    public Builder setBytesPayload(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  payloadCase_ = 6;
+      payload_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes bytesPayload = 6;</code>
+     */
+    public Builder clearBytesPayload() {
+      if (payloadCase_ == 6) {
+        payloadCase_ = 0;
+        payload_ = null;
+        onChanged();
+      }
+      return this;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

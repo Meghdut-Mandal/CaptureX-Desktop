@@ -10,9 +10,11 @@ message Message {
   int32 id = 1;
   string dest =2;
   MessageType messageType = 3;
-  google.protobuf.Any  messagePayload = 4;
-
-
+  oneof payload {
+    JoinPayload joinPayload = 4;
+    string textPayload = 5;
+    bytes bytesPayload = 6;
+  }
 }
 enum MessageType {
   REQUEST_PASTE_TEXT = 0;
@@ -23,6 +25,7 @@ enum MessageType {
   RESPONSE_COPY_SS = 5;
   UPDATE_JOIN =6;
   UPDATE_CLIENT = 7;
+  REQUEST_COPY_TEXT = 8;
 }
 
 message JoinPayload {
@@ -31,10 +34,4 @@ message JoinPayload {
   string deviceType = 3;
   string name = 4;
   repeated string clipboard = 5;
-}
-message TextPayload {
-  string text = 1;
-}
-message ResponsePayload {
-  string status = 1;
 }

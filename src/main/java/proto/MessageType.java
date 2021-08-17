@@ -40,6 +40,10 @@ public enum MessageType
    * <code>UPDATE_CLIENT = 7;</code>
    */
   UPDATE_CLIENT(7),
+  /**
+   * <code>REQUEST_COPY_TEXT = 8;</code>
+   */
+  REQUEST_COPY_TEXT(8),
   UNRECOGNIZED(-1),
   ;
 
@@ -75,6 +79,10 @@ public enum MessageType
    * <code>UPDATE_CLIENT = 7;</code>
    */
   public static final int UPDATE_CLIENT_VALUE = 7;
+  /**
+   * <code>REQUEST_COPY_TEXT = 8;</code>
+   */
+  public static final int REQUEST_COPY_TEXT_VALUE = 8;
 
 
   public final int getNumber() {
@@ -86,8 +94,6 @@ public enum MessageType
   }
 
   /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
    * @deprecated Use {@link #forNumber(int)} instead.
    */
   @java.lang.Deprecated
@@ -95,10 +101,6 @@ public enum MessageType
     return forNumber(value);
   }
 
-  /**
-   * @param value The numeric wire value of the corresponding enum entry.
-   * @return The enum associated with the given numeric wire value.
-   */
   public static MessageType forNumber(int value) {
     switch (value) {
       case 0: return REQUEST_PASTE_TEXT;
@@ -109,6 +111,7 @@ public enum MessageType
       case 5: return RESPONSE_COPY_SS;
       case 6: return UPDATE_JOIN;
       case 7: return UPDATE_CLIENT;
+      case 8: return REQUEST_COPY_TEXT;
       default: return null;
     }
   }
@@ -127,10 +130,6 @@ public enum MessageType
 
   public final com.google.protobuf.Descriptors.EnumValueDescriptor
       getValueDescriptor() {
-    if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalStateException(
-          "Can't get the descriptor of an unrecognized enum value.");
-    }
     return getDescriptor().getValues().get(ordinal());
   }
   public final com.google.protobuf.Descriptors.EnumDescriptor
