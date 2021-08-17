@@ -5,9 +5,10 @@ import net.dv8tion.jda.api.events.ReadyEvent
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent
 import net.dv8tion.jda.api.hooks.ListenerAdapter
 import net.dv8tion.jda.api.requests.GatewayIntent
-import proto.*
+import proto.JoinPayload
+import proto.Message
+import proto.MessageType
 import java.awt.Toolkit
-import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.StringSelection
 import java.io.File
 import java.util.*
@@ -49,9 +50,10 @@ object XBoardApp : ListenerAdapter(), TyperXView {
         val msg = event.message
         if(msg.attachments.isEmpty()) return
         val attachment = msg.attachments[0]
-        val input = attachment.retrieveInputStream().get()
-        val message = Message.parseFrom(input)
-        processMessage(message)
+        attachment.retrieveInputStream().get().use {
+            val message = Message.parseFrom(it)
+            processMessage(message)
+        }
     }
 
     override fun onReady(event: ReadyEvent) {
@@ -171,7 +173,9 @@ object XBoardApp : ListenerAdapter(), TyperXView {
     override fun setStatus(status: String?) = Unit
 
     private fun Message.Builder.sendMessage() =
-        updatesChannel.sendFile(build().toByteArray(), "protobuff.bin").queue()
+        updatesChannel.sendFile(build().toByteArray(), "protobuff.bin").queue {
+
+        }
 
 }
 
