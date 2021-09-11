@@ -1,95 +1,80 @@
-import net.dv8tion.jda.api.JDABuilder
-import net.dv8tion.jda.api.entities.Activity
-import net.dv8tion.jda.api.entities.Message
-import net.dv8tion.jda.api.events.ReadyEvent
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent
-import net.dv8tion.jda.api.hooks.ListenerAdapter
-import net.dv8tion.jda.api.requests.GatewayIntent
+import org.javacord.api.DiscordApiBuilder
+import org.javacord.api.entity.channel.TextChannel
+import org.javacord.api.entity.message.Message
+import org.javacord.api.entity.message.MessageBuilder
+import org.javacord.api.event.message.MessageCreateEvent
+import org.javacord.api.listener.message.MessageCreateListener
 import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 import kotlin.random.Random
 
 
-object DiscordApp : ListenerAdapter(), TyperXView {
-    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+object DiscordApp : MessageCreateListener, TyperXView {
+    private val clipboard = Toolkit.getDefaultToolkit().systemClipboard
     var channelName: String = ""
     var otp: String = ""
     private val config = ConfigProperties("capture.prop").apply {
         loadProps()
     }
-    val typerWorker = TyperXWorker(this)
+    private val typerWorker = TyperXWorker(this)
+    private val threadpool = Executors.newFixedThreadPool(10)
 
     @JvmStatic
     fun main(args: Array<String>) {
-
-        val builder: JDABuilder = JDABuilder.createLight(
-            config["discord_bot_id"],
-            GatewayIntent.GUILD_MESSAGES,
-            GatewayIntent.DIRECT_MESSAGES
-        ).addEventListeners(DiscordApp)
-        builder.setBulkDeleteSplittingEnabled(false)
-        builder.setActivity(Activity.watching("Taking Screenshots"))
-        builder.build()
-
-
+        val api = DiscordApiBuilder().setToken(config["discord_bot_id"]).login().join()
+        api.addListener(DiscordApp)
+        onReady()
     }
 
 
-    override fun onMessageReceived(event: MessageReceivedEvent) {
-        val msg: Message = event.message
-        if (channelName == "") {
-            println("Received  Message ${msg.contentRaw}  in ${msg.channel.id}  ")
-            if (msg.contentRaw == otp) {
-                println("OTP verified ! Connected to Channel ${msg.channel.name}")
-                channelName = msg.channel.name
-                otp = ""
-            }
-        } else
-            postVerification(msg, event)
-    }
 
     fun postVerification(
         msg: Message,
-        event: MessageReceivedEvent
+        event: MessageCreateEvent
     ) {
-        if (msg.contentRaw.length == 1) {
-            val channel = event.channel
-
-            channel.sendFile(ImageUtils.getScreenShot(), "ss.jpg")
-                .queue {
-                    println("discord>    DiscordApp>onMessageReceived   ")
-                }
-        } else if (msg.contentRaw.startsWith("#c", true)) {
-            val myString = msg.contentRaw.substring(2)
+        val channel = event.channel
+        if (msg.content.length == 1) {
+            takeSS(channel)
+            event.deleteMessage()
+        } else if (msg.content.startsWith("#c", true)) {
+            val myString = msg.content.substring(2)
             println("discord>DiscordApp>onMessageReceived  Copied $myString into clip board ")
 
             val stringSelection = StringSelection(myString)
             clipboard.setContents(stringSelection, null)
-        } else if (msg.contentRaw.startsWith("#p", true)) {
-            val text = msg.contentRaw.substring(2)
+        } else if (msg.content.startsWith("#p", true)) {
+            val text = msg.content.substring(2)
             println("discord>DiscordApp>onMessageReceived  Pasting $text into area removing spaces ")
             typerWorker.isRemoveFrontSpaces = true
             typerWorker.startRequest(text);
-        } else if (msg.contentRaw.startsWith("#z", true)) {
-            val text = msg.contentRaw.substring(2)
+        } else if (msg.content.startsWith("#z", true)) {
+            val text = msg.content.substring(2)
             println("discord>DiscordApp>onMessageReceived  Pasting $text into area. ")
             typerWorker.isRemoveFrontSpaces = false
             typerWorker.startRequest(text);
         }
     }
 
-    override fun onReady(event: ReadyEvent) {
+    private fun takeSS(channel: TextChannel?)= threadpool.submit {
+        println("Taking ss now..")
+        MessageBuilder().addAttachment(ImageUtils.getScreenShot(), "ss.jpg").send(channel).get().also{
+            addSSListener(it)
+        }
+    }
+
+    fun onReady() {
         otp = Random.nextInt(1000, 9999).toString()
         println(
             """
-            Welcome to CaptureXtream 
+            Welcome to CaptureXtream
             First step is to select a unique channel,
             and send this otp $otp as text message there
-            
+
             Waiting for Events.....
         """.trimIndent()
         )
-
     }
 
     override fun startUI() {
@@ -106,6 +91,39 @@ object DiscordApp : ListenerAdapter(), TyperXView {
 
     override fun setStatus(status: String?) {
         println("discord>DiscordApp>startUI  $status   ")
+    }
+
+    override fun onMessageCreate(event: MessageCreateEvent) {
+        val msg: Message = event.message
+        if (event.isServerMessage){
+            if (channelName == "") {
+                println("Received  Message ${msg.content}  in ${msg.channel.id}  ")
+                if (msg.content == otp) {
+                    println("OTP verified ! Connected to Channel ${event.channel.id}")
+                    channelName = msg.channel.id.toString()
+                    otp = ""
+                    msg.delete()
+                    MessageBuilder()
+                        .setContent("Touch the Camera emoji in this message to take a ss ")
+                        .send(event.channel)
+                        .get().also {
+                            addSSListener(it)
+                        }
+                }
+            } else
+                postVerification(msg, event)
+        }
+    }
+
+    private const val cameraEmoji = "\uD83D\uDCF7"
+
+    private fun addSSListener(msg: Message) {
+        msg.addReaction(cameraEmoji)
+        msg.addReactionAddListener{
+            if (it.emoji.equalsEmoji(cameraEmoji) && it.count.get()>1) {
+                takeSS(msg.channel)
+            }
+        }.removeAfter(5, TimeUnit.MINUTES);
     }
 
 
