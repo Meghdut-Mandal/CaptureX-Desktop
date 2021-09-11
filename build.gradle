@@ -6,6 +6,8 @@ plugins {
     id "com.google.protobuf" version "0.8.17"
 }
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 group ''
 version '1.0'
 mainClassName = "DiscordApp"
@@ -15,12 +17,10 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
-    // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
+   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
     implementation 'org.javacord:javacord:3.3.2'
     // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
     implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.17.3'
-
 }
 
 protobuf {
