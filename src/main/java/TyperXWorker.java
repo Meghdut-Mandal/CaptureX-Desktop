@@ -122,9 +122,7 @@ public class TyperXWorker
         }
         this.xFrame.setStatus("Running  now..");
         char[] charArray = keys.toCharArray();
-//        int numDigits = String.valueOf(charArray.length).length() - 2;
-//        long typeStartTime = System.currentTimeMillis() / 1000;
-//        long currentTime = 0;
+
         for (int i = 0; i < charArray.length; i++) {
             char c = charArray[i];
             if (isRunning.get() == STOPPED) {
@@ -134,16 +132,7 @@ public class TyperXWorker
                 pressKey(c, keyStrokeDelay);
                 int progress = (i * 100) / charArray.length;
                 this.xFrame.setProgress(progress);
-                /*
-                 * Take a pause after x seconds. Simulates somewhat of human typing habits.
-                 * x = number digits in the length of characters of the input string - 2
-                 * multiplied by 10 (seconds). The pauses are length dependent, so that it
-                 * stop very frequently for long paragraphs and stop adequetly for short paragraphs
-                 */
-//                currentTime = System.currentTimeMillis() / 1000;
-//                if((currentTime > typeStartTime) && ((currentTime - typeStartTime) % (10 * numDigits) == 0)) {
-//                    Thread.sleep(2000L);
-//                }
+
             } catch (Exception ex) {
 
                 Logger.getLogger(TyperXView.class.getName()).log(Level.SEVERE, null, ex);
