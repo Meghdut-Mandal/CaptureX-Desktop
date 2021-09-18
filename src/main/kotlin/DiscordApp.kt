@@ -110,7 +110,7 @@ object DiscordApp : MessageCreateListener, TyperXView {
                             addSSListener(it)
                         }
                 }
-            } else
+            } else if(channelName == msg.channel.id.toString())
                 postVerification(msg, event)
         }
     }
