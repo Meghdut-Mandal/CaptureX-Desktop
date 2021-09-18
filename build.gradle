@@ -48,7 +48,7 @@ buildConfig {
         properties.load(project.file('capture.prop').newDataInputStream())
         key= properties.getProperty('discord_bot_id')
     } else if(System.getenv("DISCORD_KEY")!=null){
-        keu=System.getenv("DISCORD_KEY")
+        key=System.getenv("DISCORD_KEY")
     }else throw new RuntimeException("Unable to find Discord Key!")
 
     buildConfigField 'String', 'DISCORD_KEY', key
