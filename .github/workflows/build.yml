@@ -17,3 +17,5 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew --no-daemon :shadowJar
+      env:
+        DISCORD_KEY: ${{ secrets.DISCORD_KEY }}
