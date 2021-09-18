@@ -20,7 +20,7 @@ object BotUi : DiscordApp() {
         override fun botInvite() {
             updateStatus("Generating Bot link... please wait")
             threadPool.submit {
-                val createBotInvite = api.createBotInvite()
+                val createBotInvite = api.createBotInvite(Permissions.fromBitmask(109632))
                 openLink(createBotInvite)
                 updateStatus("Bot link generated!")
             }
