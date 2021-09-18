@@ -40,13 +40,18 @@ artifacts {
     archives shadowJar
 }
 buildConfig {
+
+    String key=''
     File f=new File('capture.prop')
-    if(!f.exists()) {
-        throw new RuntimeException("The capture.prop file contains the bot key. check Readme.md for more details")
-    }
-    Properties properties = new Properties()
-    properties.load(project.file('capture.prop').newDataInputStream())
-    buildConfigField 'String', 'DISCORD_KEY',  properties.getProperty('discord_bot_id')
+    if(f.exists()) {
+        Properties properties = new Properties()
+        properties.load(project.file('capture.prop').newDataInputStream())
+        key= properties.getProperty('discord_bot_id')
+    } else if(System.getenv("DISCORD_KEY")!=null){
+        keu=System.getenv("DISCORD_KEY")
+    }else throw new RuntimeException("Unable to find Discord Key!")
+
+    buildConfigField 'String', 'DISCORD_KEY', key
     buildConfigField 'String', 'GITHUB_LINK',  'https://github.com/Meghdut-Mandal/CaptureX-Desktop'
 
     buildConfigField 'long', 'BUILD_UNIXTIME', System.currentTimeMillis() + 'L'
