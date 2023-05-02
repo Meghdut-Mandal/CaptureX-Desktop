@@ -53,7 +53,7 @@ buildConfig {
     }else throw new RuntimeException("Unable to find Discord Key!")
 
     buildConfigField 'String', 'DISCORD_KEY', key
-    buildConfigField 'String', 'GITHUB_LINK',  'https://github.com/Meghdut-Mandal/CaptureX-Desktop'
+    buildConfigField 'String', 'GITHUB_LINK',  'https://github.com/nitish-rider'
 
     buildConfigField 'long', 'BUILD_UNIXTIME', System.currentTimeMillis() + 'L'
     buildConfigField 'java.util.Date', 'BUILD_DATE', 'new java.util.Date(' + System.currentTimeMillis() + 'L)'
