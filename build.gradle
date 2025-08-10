@@ -1,27 +1,46 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.21'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id 'de.fuerstenau.buildconfig' version '1.1.8'
-    
-
+    id 'org.jetbrains.kotlin.jvm' version '2.0.21'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+// Use Java 17 toolchain for builds
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 group ''
 version '1.0'
-mainClassName = "BotUi"
+
+application {
+    mainClass = 'BotUi'
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
-    // https://mvnrepository.com/artifact/org.imgscalr/imgscalr-lib
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.21'
     implementation 'org.javacord:javacord:3.3.2'
+}
+
+// Kotlin to target JVM 17
+kotlin {
+    jvmToolchain(17)
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
 }
 
 jar {
@@ -35,30 +54,55 @@ shadowJar {
     archiveBaseName.set('capturex')
     archiveClassifier.set('')
     archiveVersion.set('')
-
-}
-artifacts {
-    archives shadowJar
-}
-buildConfig {
-
-    String key=''
-    File f=new File('capture.prop')
-    if(f.exists()) {
-        Properties properties = new Properties()
-        properties.load(project.file('capture.prop').newDataInputStream())
-        key= properties.getProperty('discord_bot_id')
-    } else if(System.getenv("DISCORD_KEY")!=null){
-        key=System.getenv("DISCORD_KEY")
-    }else throw new RuntimeException("Unable to find Discord Key!")
-
-    buildConfigField 'String', 'DISCORD_KEY', key
-    buildConfigField 'String', 'GITHUB_LINK',  'https://github.com/nitish-rider'
-
-    buildConfigField 'long', 'BUILD_UNIXTIME', System.currentTimeMillis() + 'L'
-    buildConfigField 'java.util.Date', 'BUILD_DATE', 'new java.util.Date(' + System.currentTimeMillis() + 'L)'
-    buildConfigField 'java.time.Instant', 'BUILD_INSTANT', 'java.time.Instant.ofEpochMilli(' + System.currentTimeMillis() + 'L)'
 }
 
+def generateBuildConfig = tasks.register('generateBuildConfig') {
+    def outputDir = layout.buildDirectory.dir('generated/sources/buildConfig').get().asFile
+    def pkg = 'de.fuerstenau.buildconfig'
+    def className = 'BuildConfig'
+    outputs.dir(outputDir)
+    doLast {
+        outputDir.mkdirs()
+        def srcDir = new File(outputDir, pkg.replace('.', '/'))
+        srcDir.mkdirs()
+        def key = ''
+        def propFile = file('capture.prop')
+        if (propFile.exists()) {
+            def p = new Properties()
+            propFile.withInputStream { p.load(it) }
+            key = p.getProperty('discord_bot_id', '')
+            println("Reading bot key from file")
+        } else if (System.getenv('DISCORD_KEY') != null) {
+            key = System.getenv('DISCORD_KEY')
+            println("Reading bot key from env")
+        } else {
+            println("WARNING: DISCORD_KEY not provided; using empty key for build")
+            key = ''
+        }
+        def now = System.currentTimeMillis()
+        def keyEscaped = key.replace('\\', '\\\\').replace('"', '\\"')
+        def content = """
+            package ${pkg};
+            public final class ${className} {
+                public static final String DISCORD_KEY = "${keyEscaped}";
+                public static final String GITHUB_LINK = "https://github.com/nitish-rider";
+                public static final long BUILD_UNIXTIME = ${now}L;
+                public static final java.util.Date BUILD_DATE = new java.util.Date(${now}L);
+                public static final java.time.Instant BUILD_INSTANT = java.time.Instant.ofEpochMilli(${now}L);
+                private ${className}() {}
+            }
+        """.stripIndent()
+        new File(srcDir, className + '.java').text = content
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDir(layout.buildDirectory.dir('generated/sources/buildConfig'))
+    }
+}
+
+tasks.compileJava.dependsOn(generateBuildConfig)
+tasks.compileKotlin.dependsOn(generateBuildConfig)
 
 jar.dependsOn shadowJar
